@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.EntityFrameworkCore;
 using TaskList.Domain.DTO.Responses.Task;
 
 namespace TaskList.Application.Tasks.Commands.DeleteTask
@@ -12,16 +13,11 @@ namespace TaskList.Application.Tasks.Commands.DeleteTask
             this._applicationContext = applicationContext;
         }
 
-        public async Task<DeleteTaskDTO> Handle(DeleteTaskCommand request, CancellationToken cancellationToken)
-        {
-            var task = _applicationContext.Tasks.FirstOrDefault(p => p.ID == request.ID);
-
-            if (task is null)
-                return default;
-
-            _applicationContext.Remove(task);
+        public async Task<DeleteTaskDTO?> Handle(DeleteTaskCommand request, CancellationToken cancellationToken)
+        {            
+            await _applicationContext.Tasks.Where(p => p.Id == request.Id).ExecuteDeleteAsync(cancellationToken);
             await _applicationContext.SaveChangesAsync();
-            return new DeleteTaskDTO(task.ID);
+            return default;
         }
     }
 }

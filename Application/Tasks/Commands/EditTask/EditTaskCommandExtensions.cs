@@ -11,7 +11,6 @@ namespace TaskList.Application.Tasks.Commands.EditTask
             var task = new Task
                 (                 
             command.TaskDescription,
-            command.DateAdded,
             command.DateEnding,
             command.DateDone,
             command.IsDone

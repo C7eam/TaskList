@@ -5,28 +5,25 @@ namespace TaskList.Application.Tasks.Commands.EditTask
 {
     public class EditTaskCommand : IRequest<EditTaskDTO>
     {
-        public EditTaskCommand(string taskdescription,
-            DateTime dateadded,
-            DateTime dateending,
-            DateTime datedone,
-            bool isdone)
+        public EditTaskCommand( Guid id, string taskDescription,           
+            DateTime dateEnding,
+            DateTime? dateDone,
+            bool isDone)
         {
-            TaskDescription = taskdescription;
-            DateAdded = dateadded;
-            DateEnding = dateending;
-            DateDone = datedone;
-            IsDone= isdone;
+            Id = id;
+            TaskDescription = taskDescription;
+            DateEnding = dateEnding;
+            DateDone = dateDone;
+            IsDone= isDone;
         }
-        public Guid ID { get; set; }
-        public string? TaskDescription { get; set; }
-
-        public DateTime DateAdded { get; set; }
+        public Guid Id { get; set; }
+        public string TaskDescription { get; set; }
 
         public DateTime DateEnding { get; set; }
 
-        public DateTime DateDone { get; set; }
+        public DateTime? DateDone { get; set; }
 
-        public bool IsDone { get; set; }
+        public bool IsDone { get; set; } = false;
     }
 }
 

@@ -7,8 +7,8 @@ namespace TaskList.Application.Tasks.Commands.DeleteTask
     {
         public DeleteTaskCommand(Guid id) 
         {
-            ID = id;
+            Id = id;
         }
-        public Guid ID { get; set; }
+        public Guid Id { get; set; }
     }
 }

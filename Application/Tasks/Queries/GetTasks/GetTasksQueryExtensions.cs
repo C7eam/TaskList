@@ -10,8 +10,9 @@ namespace TaskList.Application.Tasks.Queries.GetTasks
         {
             return new GetTaskDTO
             {
+            Id = task.Id,
             TaskDescription = task.TaskDescription,
-           DateAdded = task.DateAdded,
+            DateAdded = task.DateAdded,
             DateEnding = task.DateEnding,
             DateDone = task.DateDone,
             IsDone = task.IsDone

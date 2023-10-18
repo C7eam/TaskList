@@ -9,11 +9,9 @@ namespace TaskList.Application.Tasks.Commands.CreateTask
         {
             var task = new Task
                 (
-                    command.TaskDescription,
+                    command.TaskDescription,                   
                     command.DateAdded,
-                    command.DateEnding,
-                    command.DateDone,
-                    command.IsDone
+                    command.DateEnding
                 );
 
             return task;

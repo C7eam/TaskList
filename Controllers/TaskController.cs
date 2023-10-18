@@ -24,7 +24,7 @@ namespace TaskList.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetTasks()
+        public async Task<IActionResult> GetTasksAsync()
         {
             var tasks = await _mediator.Send(new GetTasksQuery());
 
@@ -36,8 +36,8 @@ namespace TaskList.Controllers
             return NotFound("No tasks in database. Please add a task first.");
         }
 
-        [HttpGet("/gettasks/{id}")]
-        public async Task<IActionResult> GetTask(Guid id)
+        [HttpGet("/{id}")]
+        public async Task<IActionResult> GetTaskAsync(Guid id)
         {
             var task = await _mediator.Send(new GetTaskQuery(id));
 
@@ -51,36 +51,35 @@ namespace TaskList.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateTask([FromBody] CreateTaskRequest request)
+        public async Task<IActionResult> CreateTaskAsync([FromBody] CreateTaskRequest request)
         {
             var task = await _mediator.Send(new CreateTaskCommand(
             request.TaskDescription,
             request.DateAdded,
-            request.DateEnding,
-            request.DateDone,
-            request.IsDone));
+            request.DateEnding
+            ));
 
             return Ok(task);
         }
 
-        [HttpDelete]
-        public async Task<IActionResult> DeleteTask(DeleteTaskDTO request)
+        [HttpDelete("/{id}")]
+        public async Task<IActionResult> DeleteTaskAsync(DeleteTaskDTO request)
         {
-            var task = await _mediator.Send(new DeleteTaskCommand(request.ID));
+            var task = await _mediator.Send(new DeleteTaskCommand(request.Id));
 
             if (task != null)
             {
-                return Ok(DeleteTask(request));
+                return Ok(DeleteTaskAsync(request));
             }
-            return NotFound($"No task in database with ID: {request.ID}.");
+            return NotFound($"No task in database with ID: {request.Id}.");
         }
 
-        [HttpPatch("/edittask/{id}")]
-        public async Task<IActionResult> EditTask([FromBody] EditTaskRequest request)
+        [HttpPut("/{id}")]
+        public async Task<IActionResult> EditTaskAsync([FromBody] EditTaskRequest request, Guid id)
         {
             var task = await _mediator.Send(new EditTaskCommand(
+            id,
             request.TaskDescription,
-            request.DateAdded,
             request.DateEnding,
             request.DateDone,
             request.IsDone));

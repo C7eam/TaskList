@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.EntityFrameworkCore;
 using TaskList.Application.Tasks.Commands.DeleteTask;
 using TaskList.Domain.DTO.Responses.Task;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
@@ -16,21 +17,23 @@ namespace TaskList.Application.Tasks.Commands.EditTask
 
         public async Task<EditTaskDTO> Handle(EditTaskCommand request, CancellationToken cancellationToken)
         {
-            var task = _applicationContext.Tasks.Where(a => a.ID == request.ID).FirstOrDefault(); ;
+            var task = _applicationContext.Tasks.FirstOrDefault(t => t.Id == request.Id);
 
-            if (task == null)
+            if (task is null)
             {
                 return default;
             }
             else
-            {
-                task.IsDone = request.IsDone;
-                task.TaskDescription = request.TaskDescription;
-                task.DateDone = request.DateDone;
-                task.DateAdded = request.DateAdded;
-                task.DateEnding = request.DateEnding;
-                await _applicationContext.SaveChangesAsync();
-                return new EditTaskDTO(task.ID);
+            {                             
+                await _applicationContext.Tasks
+                    .Where(p => p.Id == request.Id)
+                    .ExecuteUpdateAsync(s => s
+                    .SetProperty(b => b.TaskDescription, request.TaskDescription)
+                    .SetProperty(b => b.DateDone, b => request.DateDone)
+                    .SetProperty(b => b.DateEnding, b => request.DateEnding)
+                    .SetProperty(b => b.IsDone, b => request.IsDone), cancellationToken);
+                await _applicationContext.SaveChangesAsync(cancellationToken);
+                return new EditTaskDTO(task);
             }
         }
     }

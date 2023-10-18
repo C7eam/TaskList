@@ -1,33 +1,50 @@
-﻿namespace TaskList.Domain.Entities.Task
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace TaskList.Domain.Entities.Task
 {
     public class Task
     {
         public Task() { }
 
-        public Task(Guid iD)
+        public Task(Guid id)
         {
-            ID = iD;
+            Id = id;
         }
 
-        public Task(string? taskdescription, DateTime dateadded, DateTime dateending, DateTime datedone, bool isdone)
+        public Task(string taskDescription, DateTime dateAdded, DateTime? dateEnding)
         {
-            TaskDescription = taskdescription;
-            DateAdded = dateadded;
-            DateEnding = dateending;
-            DateDone = datedone;
-            IsDone = isdone;
+            TaskDescription = taskDescription;
+            DateAdded = dateAdded;
+            DateEnding = dateEnding;
         }
 
-        public Guid ID { get; set; }
+        public Task(string taskDescription, DateTime? dateEnding, DateTime? dateDone, bool isDone)
+        {
+            TaskDescription = taskDescription;
+            DateEnding = dateEnding;
+            DateDone = dateDone;
+            IsDone = isDone;
+        }
 
-        public string? TaskDescription { get; set; }
-
+        public Task(string taskDescription, DateTime dateAdded, DateTime? dateEnding, DateTime? dateDone, bool isDone)
+        {
+            TaskDescription = taskDescription;
+            DateAdded = dateAdded;
+            DateEnding = dateEnding;
+            DateDone = dateDone;
+            IsDone = isDone;
+        }
+        
+        public Guid Id { get; set; }
+        [Required, StringLength(250)]
+        public string TaskDescription { get; set; }
+        [Required]
         public DateTime DateAdded { get; set; }
 
-        public DateTime DateEnding { get; set; }
+        public DateTime? DateEnding { get; set; }
 
-        public DateTime DateDone { get; set; }
+        public DateTime? DateDone { get; set; }
 
-        public bool IsDone { get; set; }
+        public bool? IsDone { get; set; } = false;
     }
 }

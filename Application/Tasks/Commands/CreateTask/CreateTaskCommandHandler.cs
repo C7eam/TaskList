@@ -19,7 +19,7 @@ namespace TaskList.Application.Tasks.Commands.CreateTask
             await _applicationContext.Tasks.AddAsync(task);
             await _applicationContext.SaveChangesAsync();
 
-            return new CreateTaskDTO(task.ID);
+            return new CreateTaskDTO(task.Id);
         }
     }
 }
