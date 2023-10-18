@@ -9,7 +9,7 @@ namespace TaskList.Application.Tasks.Commands.DeleteTask
         {
             var task = new Task
                 (
-                    command.ID
+                    command.Id
                 );
 
             return task;

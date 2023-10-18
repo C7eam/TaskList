@@ -1,11 +1,18 @@
-﻿namespace TaskList.Domain.DTO.Responses.Task
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace TaskList.Domain.DTO.Responses.Task
 {
     public class EditTaskDTO
     {
         public EditTaskDTO(Guid id)
         {
-            ID = id;
+            Id = id;
         }
-        public Guid ID { get; set; }
+        public Guid Id { get; set; }
+        public EditTaskDTO(Entities.Task.Task task)
+        {
+        }
+
+        
     }
 }

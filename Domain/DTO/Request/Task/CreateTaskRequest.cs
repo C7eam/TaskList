@@ -6,7 +6,7 @@
 
         public DateTime DateAdded { get; set; }
 
-        public DateTime DateEnding { get; set; }
+        public DateTime DateEnding { get; set; }      
 
         public DateTime DateDone { get; set; }
 

@@ -7,9 +7,9 @@ namespace TaskList.Application.Tasks.Queries.GetTask
     {
         public GetTaskQuery(Guid id)
     {
-        ID = id;
+        Id = id;
     }
 
-    public Guid ID { get; set; }
+    public Guid Id { get; set; }
 }
 }
