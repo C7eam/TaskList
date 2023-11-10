@@ -1,10 +1,13 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using TaskList.Domain.Entities.Task;
 using Task = TaskList.Domain.Entities.Task.Task;
+using Microsoft.AspNetCore.Identity;
+using TaskList.Authentification;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace TaskList
 {
-    public class ApplicationContext : DbContext
+    public class ApplicationContext : IdentityDbContext<ApplicationUser>
     {
         
         public ApplicationContext(DbContextOptions<ApplicationContext> options)

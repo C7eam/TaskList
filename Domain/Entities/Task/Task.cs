@@ -11,6 +11,12 @@ namespace TaskList.Domain.Entities.Task
             Id = id;
         }
 
+        public Task(string taskDescription, DateTime? dateEnding)
+        {
+            TaskDescription = taskDescription;
+            DateEnding = dateEnding;
+        }
+
         public Task(string taskDescription, DateTime dateAdded, DateTime? dateEnding)
         {
             TaskDescription = taskDescription;

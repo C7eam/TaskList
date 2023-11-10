@@ -5,16 +5,13 @@ namespace TaskList.Application.Tasks.Commands.CreateTask
 {
     public class CreateTaskCommand : IRequest<CreateTaskDTO>
     {
-        public CreateTaskCommand(string taskDescription, DateTime dateAdded, DateTime dateEnding)
+        public CreateTaskCommand(string taskDescription, DateTime dateEnding)
         {
-            TaskDescription = taskDescription;
-            DateAdded = dateAdded;
+            TaskDescription = taskDescription;            
             DateEnding = dateEnding;
         }
 
         public string TaskDescription { get; set; }
-
-        public DateTime DateAdded { get; set; }
 
         public DateTime? DateEnding { get; set; }
 
