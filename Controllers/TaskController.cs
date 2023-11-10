@@ -9,9 +9,11 @@ using TaskList.Application.Tasks.Queries.GetTask;
 using TaskList.Application.Tasks.Commands.DeleteTask;
 using TaskList.Domain.DTO.Responses.Task;
 using TaskList.Application.Tasks.Commands.EditTask;
+using Microsoft.AspNetCore.Authorization;
 
 namespace TaskList.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class TaskController : ControllerBase
@@ -54,8 +56,7 @@ namespace TaskList.Controllers
         public async Task<IActionResult> CreateTaskAsync([FromBody] CreateTaskRequest request)
         {
             var task = await _mediator.Send(new CreateTaskCommand(
-            request.TaskDescription,
-            request.DateAdded,
+            request.TaskDescription,           
             request.DateEnding
             ));
 

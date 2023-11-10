@@ -1,0 +1,30 @@
+version: '3.4'
+
+services:
+  tasklist:
+    image: ${DOCKER_REGISTRY-}tasklist
+    build:
+      context: .
+      dockerfile: Dockerfile
+  tasksRedis:
+    image: redis
+    container_name: tasksRedis
+    restart: always
+    ports:
+      - "6379:6379"
+
+  tasksPostgres:
+    image: postgres
+    container_name: tasksPostgres
+    restart: always
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=FHqnswff14
+      - POSTGRES_DB=tasksdb
+    volumes:
+      - pgdata:/var/lib/postgresql/data/
+
+volumes:
+  pgdata:

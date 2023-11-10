@@ -16,7 +16,7 @@ namespace TaskList.Application.Tasks.Commands.DeleteTask
         public async Task<DeleteTaskDTO?> Handle(DeleteTaskCommand request, CancellationToken cancellationToken)
         {            
             await _applicationContext.Tasks.Where(p => p.Id == request.Id).ExecuteDeleteAsync(cancellationToken);
-            await _applicationContext.SaveChangesAsync();
+            await _applicationContext.SaveChangesAsync(cancellationToken);
             return default;
         }
     }

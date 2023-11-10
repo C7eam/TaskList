@@ -10,7 +10,6 @@ namespace TaskList.Application.Tasks.Commands.CreateTask
             var task = new Task
                 (
                     command.TaskDescription,                   
-                    command.DateAdded,
                     command.DateEnding
                 );
 
