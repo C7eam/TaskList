@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Npgsql.Internal.TypeHandlers.DateTimeHandlers;
 using TaskList.Domain.DTO.Responses.Task;
 
 namespace TaskList.Application.Tasks.Commands.CreateTask
@@ -10,6 +11,7 @@ namespace TaskList.Application.Tasks.Commands.CreateTask
             TaskDescription = taskDescription;            
             DateEnding = dateEnding;
         }
+        public DateTime? DateAdded { get; set; }
 
         public string TaskDescription { get; set; }
 

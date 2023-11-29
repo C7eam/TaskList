@@ -3,7 +3,6 @@ using TaskList.Application.Tasks.Commands.CreateTask;
 using TaskList.Domain.DTO.Request.Task;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 using TaskList.Application.Tasks.Queries.GetTasks;
 using TaskList.Application.Tasks.Queries.GetTask;
 using TaskList.Application.Tasks.Commands.DeleteTask;
@@ -13,16 +12,18 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace TaskList.Controllers
 {
-    [Authorize]
+    
     [Route("api/[controller]")]
     [ApiController]
     public class TaskController : ControllerBase
     {
         private readonly IMediator _mediator;
+        private readonly ILogger<TaskController> _logger;
 
-        public TaskController(IMediator mediator)
+        public TaskController(IMediator mediator, ILogger<TaskController> logger)
         {
             _mediator = mediator;
+            _logger = logger;
         }
 
         [HttpGet]
@@ -54,7 +55,7 @@ namespace TaskList.Controllers
 
         [HttpPost]
         public async Task<IActionResult> CreateTaskAsync([FromBody] CreateTaskRequest request)
-        {
+        {           
             var task = await _mediator.Send(new CreateTaskCommand(
             request.TaskDescription,           
             request.DateEnding
@@ -65,14 +66,10 @@ namespace TaskList.Controllers
 
         [HttpDelete("/{id}")]
         public async Task<IActionResult> DeleteTaskAsync(DeleteTaskDTO request)
-        {
-            var task = await _mediator.Send(new DeleteTaskCommand(request.Id));
-
-            if (task != null)
-            {
-                return Ok(DeleteTaskAsync(request));
-            }
-            return NotFound($"No task in database with ID: {request.Id}.");
+        {          
+               await _mediator.Send(new DeleteTaskCommand(request.Id));
+          
+               return Ok();
         }
 
         [HttpPut("/{id}")]

@@ -45,7 +45,7 @@ namespace TaskList.Domain.Entities.Task
         [Required, StringLength(250)]
         public string TaskDescription { get; set; }
         [Required]
-        public DateTime DateAdded { get; set; }
+        public DateTime DateAdded { get; set; } = DateTime.UtcNow;
 
         public DateTime? DateEnding { get; set; }
 

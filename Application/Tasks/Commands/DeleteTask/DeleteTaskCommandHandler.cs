@@ -3,8 +3,8 @@ using Microsoft.EntityFrameworkCore;
 using TaskList.Domain.DTO.Responses.Task;
 
 namespace TaskList.Application.Tasks.Commands.DeleteTask
-{   
-    public class DeleteTaskCommandHandler : IRequestHandler<DeleteTaskCommand, DeleteTaskDTO>
+{
+    public class DeleteTaskCommandHandler : IRequestHandler<DeleteTaskCommand, string>
     {
         private readonly ApplicationContext _applicationContext;
 
@@ -13,11 +13,22 @@ namespace TaskList.Application.Tasks.Commands.DeleteTask
             this._applicationContext = applicationContext;
         }
 
-        public async Task<DeleteTaskDTO?> Handle(DeleteTaskCommand request, CancellationToken cancellationToken)
-        {            
-            await _applicationContext.Tasks.Where(p => p.Id == request.Id).ExecuteDeleteAsync(cancellationToken);
-            await _applicationContext.SaveChangesAsync(cancellationToken);
-            return default;
+        public async Task<string> Handle(DeleteTaskCommand request, CancellationToken cancellationToken)
+        {
+            try
+            {
+                var task = (_applicationContext.Tasks.FirstOrDefaultAsync(x => x.Id == request.Id));
+                
+                    await _applicationContext.Tasks.Where(p => p.Id == request.Id).ExecuteDeleteAsync(cancellationToken);                   
+            }
+                 
+            catch (Exception exp)
+            {
+                throw (new ApplicationException(exp.Message));
+            }
+            
+              return "Task has been deleted";
+            
         }
     }
 }

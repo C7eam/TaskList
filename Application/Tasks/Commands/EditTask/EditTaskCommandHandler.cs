@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.EntityFrameworkCore;
 using TaskList.Application.Tasks.Commands.DeleteTask;
 using TaskList.Domain.DTO.Responses.Task;
@@ -17,11 +18,11 @@ namespace TaskList.Application.Tasks.Commands.EditTask
 
         public async Task<EditTaskDTO> Handle(EditTaskCommand request, CancellationToken cancellationToken)
         {
-            var task = _applicationContext.Tasks.FirstOrDefault(t => t.Id == request.Id);
+            var task = _applicationContext.Tasks.First(t => t.Id == request.Id);
 
-            if (task is null)
+            if (task == null)
             {
-                return default;
+                return null;
             }
             else
             {                             
