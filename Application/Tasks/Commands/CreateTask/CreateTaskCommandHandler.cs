@@ -16,8 +16,8 @@ namespace TaskList.Application.Tasks.Commands.CreateTask
         public async Task<CreateTaskDTO> Handle(CreateTaskCommand request, CancellationToken cancellationToken)
         {
             var task = request.CreateTask();
-            await _applicationContext.Tasks.AddAsync(task);
-            await _applicationContext.SaveChangesAsync();
+            await _applicationContext.Tasks.AddAsync(task, cancellationToken);
+            await _applicationContext.SaveChangesAsync(cancellationToken);
 
             return new CreateTaskDTO(task.Id);
         }
