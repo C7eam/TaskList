@@ -34,7 +34,7 @@ namespace TaskList.Application.Tasks.Queries.GetTask
                     await _cache.SetStringAsync(task.Id.ToString(), taskString, new DistributedCacheEntryOptions
                     {
                         AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(1)
-                    });
+                    }, cancellationToken);
                 }
             }                   
                 return task.MapTo();

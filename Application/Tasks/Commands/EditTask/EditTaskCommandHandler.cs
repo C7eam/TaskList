@@ -17,11 +17,11 @@ namespace TaskList.Application.Tasks.Commands.EditTask
 
         public async Task<EditTaskDTO> Handle(EditTaskCommand request, CancellationToken cancellationToken)
         {
-            var task = _applicationContext.Tasks.FirstOrDefault(t => t.Id == request.Id);
+            var task = await _applicationContext.Tasks.FirstAsync(t => t.Id == request.Id);
 
-            if (task is null)
+            if (task == null)
             {
-                return default;
+                return null;
             }
             else
             {                             

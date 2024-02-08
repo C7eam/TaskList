@@ -11,6 +11,12 @@ namespace TaskList.Domain.Entities.Task
             Id = id;
         }
 
+        public Task(string taskDescription, DateTime? dateEnding)
+        {
+            TaskDescription = taskDescription;
+            DateEnding = dateEnding;
+        }
+
         public Task(string taskDescription, DateTime dateAdded, DateTime? dateEnding)
         {
             TaskDescription = taskDescription;
@@ -39,8 +45,7 @@ namespace TaskList.Domain.Entities.Task
         [Required, StringLength(250)]
         public string TaskDescription { get; set; }
         [Required]
-        public DateTime DateAdded { get; set; }
-
+        public DateTime DateAdded { get; set; } = DateTime.UtcNow;
         public DateTime? DateEnding { get; set; }
 
         public DateTime? DateDone { get; set; }
