@@ -3,7 +3,6 @@ using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 using TaskList;
 using Microsoft.AspNetCore.Identity;
-using TaskList.Authentification;
 using Microsoft.OpenApi.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
@@ -11,6 +10,9 @@ using System.Text;
 using Microsoft.Extensions.DependencyInjection;
 using TaskList.Domain.DTO.Responses.Authentification;
 using System.IdentityModel.Tokens.Jwt;
+using Microsoft.AspNetCore.Diagnostics;
+using static System.Net.Mime.MediaTypeNames;
+using System.Data.Entity.Core;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -93,7 +95,36 @@ builder.Services.AddStackExchangeRedisCache(options => {
 
 var app = builder.Build();
 
-app.UseExceptionHandler("/Error");
+app.UseExceptionHandler(exceptionHandlerApp =>
+{
+exceptionHandlerApp.Run(async context =>
+{
+    context.Response.StatusCode = StatusCodes.Status500InternalServerError;
+   
+    context.Response.ContentType = Text.Plain;
+
+    await context.Response.WriteAsync("An exception was thrown.");
+
+    var exceptionHandlerPathFeature =
+        context.Features.Get<IExceptionHandlerPathFeature>();
+
+    if (exceptionHandlerPathFeature?.Error is ObjectNotFoundException)
+    {
+        await context.Response.WriteAsync(" Not found");
+    }
+
+    if (exceptionHandlerPathFeature?.Error is KeyNotFoundException)
+    {
+        await context.Response.WriteAsync(" Wrong data");
+    }
+
+    if (exceptionHandlerPathFeature?.Path == "/")
+    {
+        await context.Response.WriteAsync(" Page: Home.");
+    }
+});
+});
+
 
 app.UseHsts();
 
@@ -114,3 +145,8 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.Run();
+public partial class Program
+{
+}
