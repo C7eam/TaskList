@@ -11,8 +11,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestProject1", "TestProject
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Business", "Business\Business.csproj", "{C5DA0C4D-E7FD-4C87-9B2D-ACA29F264D06}"
+	ProjectSection(ProjectDependencies) = postProject
+		{5A350100-F970-452F-935D-5C0CC058E1C7} = {5A350100-F970-452F-935D-5C0CC058E1C7}
+		{D96C053F-60E9-4244-AE6D-2A5C4A4C3AD8} = {D96C053F-60E9-4244-AE6D-2A5C4A4C3AD8}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataAccesLayer", "..\DataAccesLayer\DataAccesLayer.csproj", "{5A350100-F970-452F-935D-5C0CC058E1C7}"
+	ProjectSection(ProjectDependencies) = postProject
+		{D96C053F-60E9-4244-AE6D-2A5C4A4C3AD8} = {D96C053F-60E9-4244-AE6D-2A5C4A4C3AD8}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
